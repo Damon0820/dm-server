@@ -25,4 +25,17 @@ public interface ClaMapper extends Mapper<Cla> {
      * @return
      */
     public void addCla(ClaQuery claQuery);
+
+    /**
+     * 更新班级
+     */
+    public int updateCla(ClaQuery claQuery);
+
+    /**
+     * 删除班级
+     */
+    public int deleteCla(
+            @Param("id") String id
+    );
+
 }

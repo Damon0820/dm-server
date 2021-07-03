@@ -26,7 +26,8 @@ public enum  ExceptionEnum {
 
     // 班级相关
     CLA_USER_ID_NOT_NULL(400,  "用户id不能为空"),
-
+    CLA_CLA_ID_NOT_NULL(400, "班级id不能为空"),
+    CLA_CLA_NAME_NOT_NULL(400, "班级名字不能为空")
     ;
     private int code;
     private String msg;

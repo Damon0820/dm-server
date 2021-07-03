@@ -7,9 +7,11 @@ import com.leyou.cla.query.ClaQuery;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;
 import com.leyou.common.utils.UUIDUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.rmi.CORBA.Util;
 import java.util.Date;
 import java.util.List;
 
@@ -37,9 +39,32 @@ public class ClaService {
      * @return
      */
     public Boolean checkAdd(ClaQuery claQuery) {
-        if (claQuery.getUserId() == null) {
+        if (StringUtils.isBlank(claQuery.getUserId())) {
             throw new LyException(ExceptionEnum.CLA_USER_ID_NOT_NULL);
+        } else if (StringUtils.isBlank(claQuery.getClassName())) {
+            throw new LyException(ExceptionEnum.CLA_CLA_NAME_NOT_NULL);
         }
         return true;
+    }
+
+    /**
+     * 更新
+     * @param claQuery
+     */
+    public int updateCla(ClaQuery claQuery) {
+        if (StringUtils.isBlank(claQuery.getClassId())) {
+            throw new LyException(ExceptionEnum.CLA_CLA_ID_NOT_NULL);
+        }
+        return claMapper.updateCla(claQuery);
+    }
+
+    /**
+     * 删除
+     */
+    public int deleteCla(String id) {
+        if (StringUtils.isBlank(id)) {
+            throw new LyException(ExceptionEnum.CLA_CLA_ID_NOT_NULL);
+        }
+        return claMapper.deleteCla(id);
     }
 }

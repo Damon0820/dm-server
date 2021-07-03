@@ -49,4 +49,22 @@
             #{active}
         </trim>
     </insert>
+
+    <!--更新-->
+    <update id="updateCla" parameterType="com.leyou.cla.query.ClaQuery">
+        update tb_class
+        set
+          class_name = #{className},
+          memo = #{memo},
+          active = #{active}
+        <where>
+            class_id = #{classId}
+        </where>
+    </update>
+
+    <!--删除-->
+    <delete id="deleteCla">
+        delete from tb_class
+        where class_id = #{id}
+    </delete>
 </mapper>

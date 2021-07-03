@@ -26,6 +26,13 @@ public class ClaController {
     @Autowired
     ClaService claService;
 
+    /**
+     * 列表
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @GetMapping("queryClaList")
     public ResponseEntity<Result<List<Cla>>> queryClaList(
             @RequestParam(value = "userId") String userId,
@@ -38,15 +45,45 @@ public class ClaController {
         return ResponseEntity.ok(Result.success(claList));
     }
 
+    /**
+     * 新增
+     * @param token
+     * @param claQuery
+     * @return
+     */
     @PostMapping("addCla")
     public ResponseEntity<Result> addCla(
             @CookieValue("LY_TOKEN") String token,
             @RequestBody ClaQuery claQuery
-    ){
+    ) {
         // 通过token，设置userId
         UserInfo userInfo = authApi.verifyUser(token);
         claQuery.setUserId(userInfo.getUserId());
         claService.addCla(claQuery);
         return  ResponseEntity.ok(Result.success(true));
+    }
+
+    /**
+     * 更新
+     * @param claQuery
+     * @return
+     */
+    @PostMapping("updateCla")
+    public ResponseEntity<Result> updateCla(
+            @RequestBody ClaQuery claQuery
+    ) {
+        int res = claService.updateCla(claQuery);
+        return ResponseEntity.ok(Result.success(true));
+    }
+
+    /**
+     * 删除
+     */
+    @PostMapping("deleteCla")
+    public ResponseEntity<Result> deleteCla(
+            @RequestBody ClaQuery claQuery
+    ) {
+        int res = claService.deleteCla(claQuery.getClassId());
+        return ResponseEntity.ok(Result.success(true));
     }
 }
