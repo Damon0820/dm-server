@@ -9,9 +9,12 @@
         SELECT COUNT(0)
         FROM tb_user o
         WHERE 1 = 1
-          <if test="username != null and username != ''">
-              and username = #{username}
-          </if>
+            <if test="username != null and username != ''">
+                  and username = #{username}
+            </if>
+            <if test="userId != null and userId != ''">
+                and userId = #{userId}
+            </if>
             <if test="phone != null and phone != ''">
                 and phone = #{phone}
             </if>

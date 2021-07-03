@@ -9,13 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.leyou.auth</groupId>
-    <artifactId>ly-auth</artifactId>
+    <groupId>com.leyou.cla</groupId>
+    <artifactId>ly-cla</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>ly-auth-common</module>
-        <module>ly-auth-service</module>
-        <module>ly-auth-interface</module>
+        <module>ly-cla-interface</module>
+        <module>ly-cla-service</module>
     </modules>
 
 

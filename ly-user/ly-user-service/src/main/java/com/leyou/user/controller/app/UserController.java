@@ -25,32 +25,7 @@ public class UserController {
             @RequestParam(value = "type", required = true) String type
     ) {
         Boolean checkEnable = userService.checkRegData(type, username, phone);
-        if (!checkEnable) {
-            switch (type) {
-                // 用户名
-                case "1" :
-                    throw new LyException(ExceptionEnum.REGISTER_COUNT_EXIST);
-                // 电话号码
-                case "2":
-                    throw new LyException(ExceptionEnum.REGISTER_PHONE_EXIST);
-            }
-        }
         return ResponseEntity.ok(Result.success(checkEnable));
-    }
-
-    @GetMapping("register2")
-    public ResponseEntity<Result<Boolean>> register2(
-            @RequestParam(value = "phone") String phone,
-            @RequestParam(value = "code") String code,
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "password") String password
-    ) {
-        User user = new User();
-        user.setPhone(phone);
-        user.setUsername(username);
-        user.setPassword(password);
-        Boolean isSuccess = userService.register( user, code);
-        return ResponseEntity.ok(Result.success(isSuccess));
     }
 
     @PostMapping("register")
@@ -61,6 +36,10 @@ public class UserController {
         user.setPhone(userQuery.getPhone());
         user.setUsername(userQuery.getUsername());
         user.setPassword(userQuery.getPassword());
+        user.setActive("Y");
+        // 校验是否用户名和手机号可用
+        userService.checkRegData("1", userQuery.getUsername(), userQuery.getPhone());
+        userService.checkRegData("2", userQuery.getUsername(), userQuery.getPhone());
         Boolean isSuccess = userService.register( user, userQuery.getCode());
         return ResponseEntity.ok(Result.success(isSuccess));
     }

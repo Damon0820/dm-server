@@ -13,13 +13,16 @@ import java.util.Date;
 @Table(name = "tb_user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String userId;
     private String username;
     @JsonIgnore
     private String password;
     private String phone;
-    private Date created;
+    private Date createDate;
+    private String createBy;
+    private String createName;
+    private String active;
     @JsonIgnore
     private String salt;
 }

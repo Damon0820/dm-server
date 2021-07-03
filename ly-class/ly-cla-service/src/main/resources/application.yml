@@ -1,8 +1,10 @@
 server:
-  port: 8081
+  port: 8088
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
 spring:
   application:
-    name: item-service
+    name: cla-service
   datasource:
     url: jdbc:mysql://localhost:3306/dm
     username: root

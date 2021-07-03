@@ -23,6 +23,10 @@ public enum  ExceptionEnum {
     // 商品类业务错误
     PRICE_CANNOT_BE_NULL(400, "价格不能为空"),
     USER_LOGIN_ERROR(400,  "账号密码错误"),
+
+    // 班级相关
+    CLA_USER_ID_NOT_NULL(400,  "用户id不能为空"),
+
     ;
     private int code;
     private String msg;

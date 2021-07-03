@@ -2,6 +2,7 @@ package com.leyou.user.service;
 
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LyException;
+import com.leyou.common.utils.UUIDUtil;
 import com.leyou.user.mapper.UserMapper;
 import com.leyou.user.pojo.User;
 import com.leyou.user.utils.CodecUtils;
@@ -37,7 +38,18 @@ public class UserService {
                 user.setPhone(phone);
                 break;
         }
-        return userMapper.selectCountByNameOrPhone(user) == 0;
+        Boolean checkEnable = userMapper.selectCountByNameOrPhone(user) == 0;
+        if (!checkEnable) {
+            switch (type) {
+                // 用户名
+                case "1" :
+                    throw new LyException(ExceptionEnum.REGISTER_COUNT_EXIST);
+                    // 电话号码
+                case "2":
+                    throw new LyException(ExceptionEnum.REGISTER_PHONE_EXIST);
+            }
+        }
+        return true;
     }
 
     /**
@@ -66,6 +78,8 @@ public class UserService {
         user.setSalt(salt);
         // 对密码进行加密
         user.setPassword(CodecUtils.md5Hex(user.getPassword(), salt));
+        user.setUserId(UUIDUtil.getUUID());
+        user.setCreateDate(new Date());
         // 写入数据库
         Boolean boo = userMapper.insertSelective(user) == 1;
         // 如果注册成功，删除redis对验证码

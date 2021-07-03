@@ -13,6 +13,7 @@ zuul:
     item-service: /item/** # 商品服务
     user-service: /user/** # 用户服务
     auth-service: /auth/** # 授权中心
+    cla-service: /cla/**   # 班级服务
   add-host-header: true # 转发的时候，携带原本head头信息
   sensitive-headers: # 过滤掉敏感的头信息,设置为null，则不会禁止
 ribbon:
@@ -41,3 +42,4 @@ leyou:
       - /api/user/queryUserByUsernameAndPassword
       - /api/item
       - /api/search
+      - /api/cla

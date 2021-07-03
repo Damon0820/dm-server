@@ -1,4 +1,4 @@
-package com.leyou.auth.controller;
+package com.leyou.auth.controller.app;
 
 import com.leyou.auth.properties.JwtProperties;
 import com.leyou.auth.service.AuthService;
@@ -8,19 +8,12 @@ import com.leyou.common.exception.LyException;
 import com.leyou.common.utils.CookieUtils;
 import com.leyou.common.vo.Result;
 import com.leyou.user.pojo.User;
-import com.netflix.discovery.converters.Auto;
-import com.netflix.ribbon.proxy.annotation.Http;
-import con.leyou.auth.pojo.UserInfo;
+import com.leyou.auth.pojo.UserInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +28,7 @@ public class AuthController {
     JwtProperties jwtProperties;
 
     /**
-     * 登录授权
+     * 登录授权,生成token
      * @param username
      * @param password
      * @return
@@ -58,7 +51,7 @@ public class AuthController {
     }
 
     /**
-     * 登录验证
+     * 鉴权，判断token是否有效，返回简单用户信息
      */
     @GetMapping("verify")
     public ResponseEntity<Result<UserInfo>> verifyUser(

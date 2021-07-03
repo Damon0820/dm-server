@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leyou.cla.mapper.ClaMapper">
+    <!--<resultMap id="OrderWithDetail" type="com.leyou.order.pojo.Order" autoMapping="true">-->
+    <!--<id column="order_id" property="orderId"></id>-->
+    <!--</resultMap>-->
+    <resultMap id="ClaMap" type="com.leyou.cla.pojo.Cla" autoMapping="true">
+        <result column="class_id" property="classId"></result>
+        <result column="class_name" property="className"></result>
+        <result column="user_id" property="userId"></result>
+        <result column="memo" property="memo"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_name" property="createName"></result>
+        <result column="create_Date" property="CreateDate"></result>
+        <result column="active" property="active"></result>
+    </resultMap>
+
+    <!--分页查询-->
+    <select id="queryClaList" resultMap="ClaMap">
+        SELECT *
+        FROM tb_class t1
+        where t1.user_id = #{userId}
+        limit #{pageSize} offset #{page}
+    </select>
+
+    <!--新增-->
+    <insert id="addCla" parameterType="com.leyou.cla.query.ClaQuery">
+        insert into tb_class
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+          class_id,
+          user_id,
+          class_name,
+          memo,
+          create_by,
+          create_name,
+          create_date,
+          active
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{classId},
+            #{userId},
+            #{className},
+            #{memo},
+            #{createBy},
+            #{createName},
+            #{createDate},
+            #{active}
+        </trim>
+    </insert>
+</mapper>
