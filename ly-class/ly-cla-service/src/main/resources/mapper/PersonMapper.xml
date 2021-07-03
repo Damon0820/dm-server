@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.leyou.cla.mapper.ClaMapper">
+<mapper namespace="com.leyou.cla.mapper.PersonMapper">
     <!--<resultMap id="OrderWithDetail" type="com.leyou.order.pojo.Order" autoMapping="true">-->
     <!--<id column="order_id" property="orderId"></id>-->
     <!--</resultMap>-->
-    <resultMap id="ClaMap" type="com.leyou.cla.pojo.Cla" autoMapping="true">
+    <resultMap id="personMap" type="com.leyou.cla.pojo.Person" autoMapping="true">
+        <result column="person_id" property="personId"></result>
+        <result column="person_name" property="personName"></result>
         <result column="class_id" property="classId"></result>
-        <result column="class_name" property="className"></result>
-        <result column="user_id" property="userId"></result>
         <result column="memo" property="memo"></result>
         <result column="create_by" property="createBy"></result>
         <result column="create_name" property="createName"></result>
@@ -17,20 +17,24 @@
     </resultMap>
 
     <!--分页查询-->
-    <select id="queryClaList" resultMap="ClaMap">
+    <select id="queryList" resultMap="personMap">
         SELECT *
-        FROM tb_class t1
-        where t1.user_id = #{userId}
+        FROM tb_person t1
+        <where> 1 = 1
+            <if test="classId != null and classId != ''">
+                and t1.class_id = #{classId}
+            </if>
+        </where>
         limit #{pageSize} offset #{page}
     </select>
 
     <!--新增-->
-    <insert id="addCla" parameterType="com.leyou.cla.query.ClaQuery">
-        insert into tb_class
+    <insert id="addBean" parameterType="com.leyou.cla.query.PersonQuery">
+        insert into tb_person
         <trim prefix="(" suffix=")" suffixOverrides=",">
+          person_id,
           class_id,
-          user_id,
-          class_name,
+          person_name,
           memo,
           create_by,
           create_name,
@@ -39,9 +43,9 @@
         </trim>
         values
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{personId},
             #{classId},
-            #{userId},
-            #{className},
+              #{personName},
             #{memo},
             #{createBy},
             #{createName},
@@ -51,36 +55,20 @@
     </insert>
 
     <!--更新-->
-    <update id="updateCla" parameterType="com.leyou.cla.query.ClaQuery">
-        update tb_class
+    <update id="updateBean" parameterType="com.leyou.cla.query.PersonQuery">
+        update tb_person
         set
-          class_name = #{className},
+          person_name = #{personName},
           memo = #{memo},
           active = #{active}
         <where>
-            class_id = #{classId}
+            person_id = #{personId}
         </where>
     </update>
 
     <!--删除-->
-    <delete id="deleteCla">
-        delete from tb_class
-        where class_id = #{id}
+    <delete id="deleteBean">
+        delete from tb_person
+        where person_id = #{id}
     </delete>
-
-    <!--班级-人员 关联新增-->
-    <insert id="addClassPerson">
-        insert into tb_class_person
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            class_id,
-            person_id,
-            create_date,
-        </trim>
-        values
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            #{classId},
-            #{personId},
-            #{createDate},
-        </trim>
-    </insert>
 </mapper>

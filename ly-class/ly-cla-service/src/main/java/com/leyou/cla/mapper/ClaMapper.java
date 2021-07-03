@@ -5,6 +5,7 @@ import com.leyou.cla.query.ClaQuery;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ClaMapper extends Mapper<Cla> {
@@ -36,6 +37,12 @@ public interface ClaMapper extends Mapper<Cla> {
      */
     public int deleteCla(
             @Param("id") String id
+    );
+
+    public int addClassPerson(
+            @Param("classId") String classId,
+            @Param("personId") String personId,
+            @Param("createDate") Date createDate
     );
 
 }

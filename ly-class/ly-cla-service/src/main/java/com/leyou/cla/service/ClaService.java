@@ -67,4 +67,13 @@ public class ClaService {
         }
         return claMapper.deleteCla(id);
     }
+
+    public void addClassPerson(ClaQuery claQuery) {
+        if (StringUtils.isBlank(claQuery.getClassId())) {
+            throw new LyException(ExceptionEnum.CLA_CLA_ID_NOT_NULL);
+        }
+        for (String pId : claQuery.getPersonIdList()) {
+            claMapper.addClassPerson(claQuery.getClassId(), pId, new Date());
+        }
+    }
 }

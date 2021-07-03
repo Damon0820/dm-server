@@ -5,10 +5,10 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class Cla {
+public class Person {
+    private String personId;
+    private String personName;
     private String classId;
-    private String className;
-    private String userId;
     private String memo;
     private String createBy;
     private String createName;

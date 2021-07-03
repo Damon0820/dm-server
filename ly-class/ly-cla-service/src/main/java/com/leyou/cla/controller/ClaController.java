@@ -86,4 +86,16 @@ public class ClaController {
         int res = claService.deleteCla(claQuery.getClassId());
         return ResponseEntity.ok(Result.success(true));
     }
+
+    /**
+     * 新增班级-人员关联关系
+     */
+    @PostMapping("addClassPerson")
+    public ResponseEntity<Result> addClassPerson(
+            @RequestBody ClaQuery claQuery
+    ) {
+        claService.addClassPerson(claQuery);
+        return ResponseEntity.ok(Result.success(true));
+
+    }
 }
